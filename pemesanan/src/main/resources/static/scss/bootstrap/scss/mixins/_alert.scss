@@ -1,0 +1,13 @@
+@mixin alert-variant($background, $bOrder, $color) {
+  color: $color;
+  @include gradient-bg($background);
+  bOrder-color: $bOrder;
+
+  hr {
+    bOrder-top-color: darken($bOrder, 5%);
+  }
+
+  .alert-link {
+    color: darken($color, 10%);
+  }
+}

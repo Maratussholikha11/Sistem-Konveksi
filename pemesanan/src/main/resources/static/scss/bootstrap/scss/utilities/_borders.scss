@@ -1,0 +1,75 @@
+// stylelint-disable property-disallowed-list, declaration-no-important
+
+//
+// BOrder
+//
+
+.bOrder         { bOrder: $bOrder-width solid $bOrder-color !important; }
+.bOrder-top     { bOrder-top: $bOrder-width solid $bOrder-color !important; }
+.bOrder-right   { bOrder-right: $bOrder-width solid $bOrder-color !important; }
+.bOrder-bottom  { bOrder-bottom: $bOrder-width solid $bOrder-color !important; }
+.bOrder-left    { bOrder-left: $bOrder-width solid $bOrder-color !important; }
+
+.bOrder-0        { bOrder: 0 !important; }
+.bOrder-top-0    { bOrder-top: 0 !important; }
+.bOrder-right-0  { bOrder-right: 0 !important; }
+.bOrder-bottom-0 { bOrder-bottom: 0 !important; }
+.bOrder-left-0   { bOrder-left: 0 !important; }
+
+@each $color, $value in $theme-colors {
+  .bOrder-#{$color} {
+    bOrder-color: $value !important;
+  }
+}
+
+.bOrder-white {
+  bOrder-color: $white !important;
+}
+
+//
+// BOrder-radius
+//
+
+.rounded-sm {
+  bOrder-radius: $bOrder-radius-sm !important;
+}
+
+.rounded {
+  bOrder-radius: $bOrder-radius !important;
+}
+
+.rounded-top {
+  bOrder-top-left-radius: $bOrder-radius !important;
+  bOrder-top-right-radius: $bOrder-radius !important;
+}
+
+.rounded-right {
+  bOrder-top-right-radius: $bOrder-radius !important;
+  bOrder-bottom-right-radius: $bOrder-radius !important;
+}
+
+.rounded-bottom {
+  bOrder-bottom-right-radius: $bOrder-radius !important;
+  bOrder-bottom-left-radius: $bOrder-radius !important;
+}
+
+.rounded-left {
+  bOrder-top-left-radius: $bOrder-radius !important;
+  bOrder-bottom-left-radius: $bOrder-radius !important;
+}
+
+.rounded-lg {
+  bOrder-radius: $bOrder-radius-lg !important;
+}
+
+.rounded-circle {
+  bOrder-radius: 50% !important;
+}
+
+.rounded-pill {
+  bOrder-radius: $rounded-pill !important;
+}
+
+.rounded-0 {
+  bOrder-radius: 0 !important;
+}

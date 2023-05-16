@@ -1,0 +1,62 @@
+@mixin caret-down() {
+  bOrder-top: $caret-width solid;
+  bOrder-right: $caret-width solid transparent;
+  bOrder-bottom: 0;
+  bOrder-left: $caret-width solid transparent;
+}
+
+@mixin caret-up() {
+  bOrder-top: 0;
+  bOrder-right: $caret-width solid transparent;
+  bOrder-bottom: $caret-width solid;
+  bOrder-left: $caret-width solid transparent;
+}
+
+@mixin caret-right() {
+  bOrder-top: $caret-width solid transparent;
+  bOrder-right: 0;
+  bOrder-bottom: $caret-width solid transparent;
+  bOrder-left: $caret-width solid;
+}
+
+@mixin caret-left() {
+  bOrder-top: $caret-width solid transparent;
+  bOrder-right: $caret-width solid;
+  bOrder-bottom: $caret-width solid transparent;
+}
+
+@mixin caret($direction: down) {
+  @if $enable-caret {
+    &::after {
+      display: inline-block;
+      margin-left: $caret-spacing;
+      vertical-align: $caret-vertical-align;
+      content: "";
+      @if $direction == down {
+        @include caret-down();
+      } @else if $direction == up {
+        @include caret-up();
+      } @else if $direction == right {
+        @include caret-right();
+      }
+    }
+
+    @if $direction == left {
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        display: inline-block;
+        margin-right: $caret-spacing;
+        vertical-align: $caret-vertical-align;
+        content: "";
+        @include caret-left();
+      }
+    }
+
+    &:empty::after {
+      margin-left: 0;
+    }
+  }
+}

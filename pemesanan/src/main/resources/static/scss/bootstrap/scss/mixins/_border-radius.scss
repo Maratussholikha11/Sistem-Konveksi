@@ -1,0 +1,76 @@
+// stylelint-disable property-disallowed-list
+// Single side bOrder-radius
+
+// Helper function to replace negative values with 0
+@function valid-radius($radius) {
+  $return: ();
+  @each $value in $radius {
+    @if type-of($value) == number {
+      $return: append($return, max($value, 0));
+    } @else {
+      $return: append($return, $value);
+    }
+  }
+  @return $return;
+}
+
+@mixin bOrder-radius($radius: $bOrder-radius, $fallback-bOrder-radius: false) {
+  @if $enable-rounded {
+    bOrder-radius: valid-radius($radius);
+  }
+  @else if $fallback-bOrder-radius != false {
+    bOrder-radius: $fallback-bOrder-radius;
+  }
+}
+
+@mixin bOrder-top-radius($radius) {
+  @if $enable-rounded {
+    bOrder-top-left-radius: valid-radius($radius);
+    bOrder-top-right-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-right-radius($radius) {
+  @if $enable-rounded {
+    bOrder-top-right-radius: valid-radius($radius);
+    bOrder-bottom-right-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-bottom-radius($radius) {
+  @if $enable-rounded {
+    bOrder-bottom-right-radius: valid-radius($radius);
+    bOrder-bottom-left-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-left-radius($radius) {
+  @if $enable-rounded {
+    bOrder-top-left-radius: valid-radius($radius);
+    bOrder-bottom-left-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-top-left-radius($radius) {
+  @if $enable-rounded {
+    bOrder-top-left-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-top-right-radius($radius) {
+  @if $enable-rounded {
+    bOrder-top-right-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-bottom-right-radius($radius) {
+  @if $enable-rounded {
+    bOrder-bottom-right-radius: valid-radius($radius);
+  }
+}
+
+@mixin bOrder-bottom-left-radius($radius) {
+  @if $enable-rounded {
+    bOrder-bottom-left-radius: valid-radius($radius);
+  }
+}

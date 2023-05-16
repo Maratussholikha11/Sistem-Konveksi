@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Forms - Atlantis Lite Bootstrap 4 Admin Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../../assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+
+
+	</script>
+
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../assets/css/atlantis.min.css">
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="../../assets/css/demo.css">
+
+	<script type="text/javascript">
+		function validasi_input(form){
+		  var price = document.getElementById("harga").value;
+			var qty = document.getElementById("quantity").value;
+			var dp = document.getElementById("dp").value;
+			var bayar = price * qty;
+			var jmlDp = 0;
+			var prc = 0.30;
+			var jmlDp = bayar * prc;
+
+
+			if(dp<jmlDp){
+				alert("Total biaya : " + bayar + "\nMinimal DP sebesar " + jmlDp);
+				document.getElementById("image").disabled = true;
+				document.getElementById("submit").disabled = true;
+				return false;
+
+			}if(dp>jmlDp){
+				alert("Total biaya : " + bayar + "\nMaksimal DP sebesar " + bayar);
+				document.getElementById("image").disabled = true;
+				document.getElementById("submit").disabled = true;
+				return false;
+			}else{
+				document.getElementById("image").disabled = false;
+				document.getElementById("submit").disabled = false;
+			}
+
+			 var S = Number(document.getElementById("jmlS").value);
+             var M = Number(document.getElementById("jmlM").value);
+             var L = Number(document.getElementById("jmlL").value);
+             var XL = Number(document.getElementById("jmlXL").value);
+             var XXL = Number(document.getElementById("jmlXXL").value);
+             var jmlU= S + M + L + XL + XXL;
+
+             if( jmlU < qty){
+                  alert("Jumlah ukuran kurang!");
+                  return false;
+             }else if(jmlU > qty){
+                  alert("Jumlah ukuran kelebihan!");
+                  return false;
+             }
+
+			return true;
+		}
+		function myFunction() {
+			var price = document.getElementById("harga").value;
+		  	var qty = document.getElementById("quantity").value;
+			var bayar = price * qty;
+			var jmlDp = 0;
+			var prc = 0.30;
+			var jmlDp = bayar * prc;
+			alert("DP : " + jmlDp);
+			document.getElementById("dp").value = jmlDp;
+		}
+
+		function dp(){
+			if(dp<jmlDp){
+				alert("Total biaya : " + bayar + "\nMinimal DP sebesar " + jmlDp);
+				document.getElementById("image").disabled = true;
+				document.getElementById("submit").disabled = true;
+				return false;
+
+			}if(dp>jmlDp){
+				alert("Total biaya : " + bayar + "\nMaksimal DP sebesar " + bayar);
+				document.getElementById("image").disabled = true;
+				document.getElementById("submit").disabled = true;
+				return false;
+			}if(dp==jmlDp){
+				document.getElementById("image").disabled = false;
+				document.getElementById("submit").disabled = false;
+			}
+
+			return true;
+		}
+	</script>
+</head>
+<body>
+<script type="text/javascript">
+		<!--alert('cek');
+	    function validasi() {
+			var jml = document.getElementById('quantity').value;
+			alert(jml);
+			if(jml > 400){
+				alert('Maksimal jumlah adalah 400 pcs');
+				return;
+			else{
+				return true;
+			}
+		}-->
+    </script>
+<div class="wrapper sidebar_minimize">
+	<div class="main-header">
+		<!-- Logo Header -->
+		<div class="logo-header" data-background-color="blue">
+
+			<a href="../index.html" class="logo">
+				<img src="../../assets/img/logo3.png" alt="navbar brand" class="navbar-brand">
+			</a>
+			<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="icon-menu"></i>
+					</span>
+			</button>
+			<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+			<div class="nav-toggle">
+				<button class="btn btn-toggle toggle-sidebar">
+					<i class="icon-menu"></i>
+				</button>
+			</div>
+		</div>
+		<!-- End Logo Header -->
+
+		<!-- Navbar Header -->
+		<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+			<div class="container-fluid">
+				<div class="collapse" id="search-nav">
+					<form class="navbar-left navbar-form nav-search mr-md-3">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<button type="submit" class="btn btn-search pr-1">
+									<i class="fa fa-search search-icon"></i>
+								</button>
+							</div>
+							<input type="text" placeholder="Search ..." class="form-control">
+						</div>
+					</form>
+				</div>
+				<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+					<li class="nav-item toggle-nav-search hidden-caret">
+						<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
+							<i class="fa fa-search"></i>
+						</a>
+					</li>
+
+					<li class="nav-item dropdown hidden-caret">
+						<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+							<div class="avatar-sm">
+								&nbsp;&nbsp;&nbsp;Logout
+								<!--<img src="../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">-->
+							</div>
+						</a>
+						<ul class="dropdown-menu dropdown-user animated fadeIn">
+							<div class="dropdown-user-scroll scrollbar-outer">
+								<li>
+									<div class="user-box">
+										<!--<div class="avatar-lg"><img src="../../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>-->
+										<h4 th:text="${userName}"></h4>
+										<p class="text-muted" th:text="${userEmail}"></p>
+									</div>
+								</li>
+								<li>
+									<!--<div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    <a class="dropdown-item" href="#">My Balance</a>
+                                    <a class="dropdown-item" href="#">Inbox</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Account Setting</a>
+                                    <div class="dropdown-divider"></div>-->
+									<a class="dropdown-item" th:href="@{/logout}">Logout</a>
+								</li>
+							</div>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<!-- End Navbar -->
+	</div>
+	<!-- Sidebar -->
+	<div class="sidebar sidebar-style-2">
+		<div class="sidebar-wrapper scrollbar scrollbar-inner">
+			<div class="sidebar-content">
+
+				<ul class="nav nav-primary">
+					<li class="nav-item">
+						<a th:href="@{/}" class="collapsed" aria-expanded="false">
+							<i class="fas fa-home"></i>
+							<p>Dashboard</p>
+							<!--<span class="caret"></span>-->
+						</a>
+						<div class="collapse" id="dashboard">
+							<ul class="nav nav-collapse">
+								<!--<li>
+                                    <a href="../../demo1/index.html">
+                                        <span class="sub-item">Dashboard 1</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../../demo2/index.html">
+                                        <span class="sub-item">Dashboard 2</span>
+                                    </a>
+                                </li>-->
+							</ul>
+						</div>
+					</li>
+					<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+						<h4 class="text-section">Components</h4>
+					</li>
+
+					<li class="nav-item active submenu">
+						<a data-toggle="collapse" href="#forms">
+							<i class="fas fa-pen-square"></i>
+							<p>Forms</p>
+							<span class="caret"></span>
+						</a>
+						<div class="collapse show" id="forms">
+							<ul class="nav nav-collapse">
+
+								<li>
+									<a th:href="@{ordering/order}">
+										<span class="sub-item">Form Pemesanan</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{transaction/form}">
+										<span class="sub-item">Form Transaksi</span>
+									</a>
+								</li>
+								<!--<li>
+                                    <a th:href="@{user/create/customer}">
+                                        <span class="sub-item">Form Pelanggan</span>
+                                    </a>
+                                </li>-->
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a data-toggle="collapse" href="#tables">
+							<i class="fas fa-table"></i>
+							<p>Tables</p>
+							<span class="caret"></span>
+						</a>
+						<div class="collapse" id="tables">
+							<ul class="nav nav-collapse">
+								<li>
+									<a th:href="@{/product/show}">
+										<span class="sub-item">Produk</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/ordering/show}">
+										<span class="sub-item">Pesanan</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/transaction/show}">
+										<span class="sub-item">Transaksi</span>
+									</a>
+								</li>
+								<!--<li>
+                                    <a th:href="@{/sale/show}">
+                                        <span class="sub-item">Penjualan</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/user/customer}">
+                                        <span class="sub-item">Pelanggan</span>
+                                    </a>
+                                </li>-->
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="main-panel">
+		<div class="content">
+			<div class="page-inner">
+				<div class="page-header">
+					<h4 class="page-title">Form</h4>
+					<ul class="breadcrumbs">
+						<li class="nav-home">
+							<a href="#">
+								<i class="flaticon-home"></i>
+							</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li class="nav-item">
+							<a href="#">Form</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li>
+							<a th:href="@{/ordering/order}">
+								<span class="sub-item">Form Pemesanan</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<form id="form"  th:action="@{/ordering/createorder}" th:object="${order}" onsubmit="return validasi_input(this)" method="post" enctype="multipart/form-data" >
+							<div class="card">
+								<div class="card-header">
+									<div class="card-title"><b>Form Pesanan</b></div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6 col-lg-4">
+											<div class="form-group form-floating-label">
+												<input type="text" class="form-control input-bOrder-bottom" th:value="${order.productId}"  id="productId" name="productId"  required>
+												<label for="productId" class="placeholder">Id produk</label>
+											</div>
+											<div class="form-group form-floating-label">
+												<input type="hidden" class="form-control input-bOrder-bottom" th:value="${order.product.price}"  id="harga" name="harga" hidden>
+												<!--												<label for="harga" class="placeholder">Harga 1 pcs</label>-->
+											</div>
+											<div class="form-group form-floating-label">
+												<input type="number" class="form-control input-bOrder-bottom" th:field="*{quantity}" onkeyup="myFunction()"  min="1" max="400" rows="3" cols="45" id="quantity"   name="quantity" required>
+												<label for="quantity" class="placeholder">Jumlah</label>
+											</div>
+											<div class="form-group form-floating-label">
+												<input type="number" class="form-control input-bOrder-bottom" th:field="*{dp}" onkeyup="validasi_input()"  name="dp" id="dp" required>
+												<label for="dp" class="placeholder">DP</label>
+											</div>
+
+											<div class="form-group form-floating-label">
+												<label for="image" class="placeholder">Struk DP</label><br>
+												<input type="file" class="form-control input-bOrder-bottom"  accept="image/*" name="image" id="image" required="true">
+											</div>
+
+											<div class="tblukuran">
+												<center><label><a th:href="@{/ordering/tabelukuran}">Tabel Ukuran</a></label></center>
+											</div>
+											<div class="form-group form-floating-label" style="height:80px;">
+												<label for="jeniskain" class="placeholder">Jenis Kain</label><br>
+												<select name="jeniskain" id="jeniskain"  required="true" >
+													<option value="Flanel">Flanel</option>
+													<option value="Katun" >Katun</option>
+													<option value="Drill">Drill</option>
+													<option value="Cotton combed">Cotton combed</option>
+													<option value="U. S. Pima Cotton">U. S. Pima Cotton</option>
+													<option value="Cotton bambo">Cotton bambo</option>
+													<option value="Thisilk">Thisilk</option>
+													<option value="Nilon">Nilon</option>
+												</select>
+											</div>
+											<!--<div class="tblukuran">
+												<center><label><a th:href="@{/ordering/tabelwarna}">Tabel Warna</a></label></center>
+											</div>-->
+											<div class="form-group form-floating-label">
+												<label for="warnakain" class="placeholder">Warna Kain</label><br>
+												<input type="text" class="form-control input-bOrder-bottom"   name="warnakain" id="warnakain" required="true">
+											</div>
+											<div class="jmlukuran">
+												<center><label>Jumlah Ukuran</label></center>
+												<div class="form-group form-floating-label">
+													<label for="jmlS" class="placeholder">S</label><br>
+													<input type="number" class="form-control input-bOrder-bottom"   name="jmlS" id="jmlS">
+												</div>
+												<span>
+													<div class="form-group form-floating-label">
+													<label for="jmlM" class="placeholder">M</label><br>
+													<input type="number" class="form-control input-bOrder-bottom"   name="jmlM" id="jmlM">
+												</div>
+												</span>
+
+												<div class="form-group form-floating-label">
+													<label for="jmlL" class="placeholder">L</label><br>
+													<input type="number" class="form-control input-bOrder-bottom"   name="jmlL" id="jmlL">
+												</div>
+												<span>
+													<div class="form-group form-floating-label">
+													<label for="jmlXL" class="placeholder">XL</label><br>
+													<input type="number" class="form-control input-bOrder-bottom"   name="jmlXL" id="jmlXL">
+												</div>
+												</span>
+												<div class="form-group form-floating-label">
+													<label for="jmlXXL" class="placeholder">XXL</label><br>
+													<input type="number" class="form-control input-bOrder-bottom"   name="jmlXXL" id="jmlXXL">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Catatan Pesanan</span>
+													</div>
+													<textarea class="form-control" aria-label="With textarea" name="OrderDetails"  id="OrderDetails" th:field="*{OrderDetails}" required="true"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+
+									<ul style="float:center;"><!--class="timeline"-->
+										<!--<li>
+											<div class="timeline-badge"><i class="flaticon-message"></i></div>
+											<div class="timeline-panel">
+												<div class="timeline-heading">
+													<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+													<p><small class="text-muted"><i class="flaticon-message"></i> 11 hours ago via Twitter</small></p>
+												</div>
+												<div class="timeline-body">
+													<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+												</div>
+											</div>
+										</li>-->
+										<li > <!--class="timeline-inverted"-->
+											<!--<div class="timeline-badge warning"><i class="flaticon-alarm-1"></i></div>-->
+											<div ><!--class="timeline-panel"-->
+												<div class="timeline-heading">
+
+												</div>
+												<center>
+													<div class="timeline-body">
+														<div class="noteee">
+															<div class="notee">
+																<p>NOTE</p>
+																<ul>
+																	<li>maksimal jumlah produk pesanan 400 pcs.</li>
+																	<li>jumlah <= 100 pcs, 15 hari pengerjaan.</li>
+																	<li>jumlah <= 200 pcs, 30 hari pengerjaan.</li>
+																	<li>jumlah <= 300 pcs, 45 hari pengerjaan.</li>
+																	<li>jumlah <= 400 pcs, 60 hari pengerjaan.</li>
+																	Syarat pesanan diterima :
+																	<li>maksimal dp adalah 30% dari total estimasi harga</li>
+																	<li>nama rekening sama dengan akun / tambahkan catatan nama pemesan jika menggunakan rekening lain</li>
+																	<li>Rek. Transfer BCA a/n Persada Konveksi 5140630383 </li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</center>
+
+
+												<!--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>-->
+											</div>
+								</div>
+								</li>
+								</ul>
+							</div>
+							<div class="card-action">
+								<button class="btn btn-success" id="submit">Submit</button>&nbsp;&nbsp;&nbsp;
+							</div>
+					</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="container-fluid">
+			<nav class="pull-left">
+				<ul class="nav">
+					<li class="nav-item">
+						<a class="nav-link" href="https://www.themekita.com">
+							ThemeKita
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							Help
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							Licenses
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="copyright ml-auto">
+				2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
+			</div>
+		</div>
+	</footer>
+</div>
+
+<!-- Custom template | don't include it in your project! -->
+<div class="custom-template">
+	<div class="title">Settings</div>
+	<div class="custom-content">
+		<div class="switcher">
+			<div class="switch-block">
+				<h4>Logo Header</h4>
+				<div class="btnSwitch">
+					<button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+					<button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+					<br/>
+					<button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+					<button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+				</div>
+			</div>
+			<div class="switch-block">
+				<h4>Navbar Header</h4>
+				<div class="btnSwitch">
+					<button type="button" class="changeTopBarColor" data-color="dark"></button>
+					<button type="button" class="changeTopBarColor" data-color="blue"></button>
+					<button type="button" class="changeTopBarColor" data-color="purple"></button>
+					<button type="button" class="changeTopBarColor" data-color="light-blue"></button>
+					<button type="button" class="changeTopBarColor" data-color="green"></button>
+					<button type="button" class="changeTopBarColor" data-color="orange"></button>
+					<button type="button" class="changeTopBarColor" data-color="red"></button>
+					<button type="button" class="changeTopBarColor" data-color="white"></button>
+					<br/>
+					<button type="button" class="changeTopBarColor" data-color="dark2"></button>
+					<button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
+					<button type="button" class="changeTopBarColor" data-color="purple2"></button>
+					<button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
+					<button type="button" class="changeTopBarColor" data-color="green2"></button>
+					<button type="button" class="changeTopBarColor" data-color="orange2"></button>
+					<button type="button" class="changeTopBarColor" data-color="red2"></button>
+				</div>
+			</div>
+			<div class="switch-block">
+				<h4>Sidebar</h4>
+				<div class="btnSwitch">
+					<button type="button" class="selected changeSideBarColor" data-color="white"></button>
+					<button type="button" class="changeSideBarColor" data-color="dark"></button>
+					<button type="button" class="changeSideBarColor" data-color="dark2"></button>
+				</div>
+			</div>
+			<div class="switch-block">
+				<h4>Background</h4>
+				<div class="btnSwitch">
+					<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+					<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+					<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+					<button type="button" class="changeBackgroundColor" data-color="dark"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="custom-toggle">
+		<i class="flaticon-settings"></i>
+	</div>
+</div>
+<!-- End Custom template -->
+</div>
+<!--   Core JS Files   -->
+<script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="../../assets/js/core/popper.min.js"></script>
+<script src="../../assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Atlantis JS -->
+<script src="../../assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script src="../../assets/js/setting-demo2.js"></script>
+</body>
+</html>
